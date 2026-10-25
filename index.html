@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="le mot juste">
+  <meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11151c" media="(prefers-color-scheme: dark)">
+  <style>
+    html,body{height:100%}
+    :root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);color-scheme:light}
+    body{margin:0}
+    img{max-width:100%}
+    [hidden]{display:none!important}
+  </style>
+<title>le mot juste</title>
+
+<style>
+/* Layout: one-screen phone app. The two genders are the palette (le=blue, la=red, the tricolore); the rest stays quiet. */
+:root{
+  --bg:#eef1f5; --surface:#ffffff; --surface-2:#f6f8fb;
+  --fg:#18202e; --muted:#5d6b80; --line:#dde3ec; --faint:#eceff4;
+  --accent:#2d3a57;
+  --le:#12488f; --le-bg:#e4edf8;         /* masculine — flag blue */
+  --la:#cc2531; --la-bg:#fbe3e5;         /* feminine  — flag red  */
+  --good:#1f8a63; --bad:#cc2531;
+  --r:16px; --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --font-ui:"Hanken Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11151c; --surface:#1a212b; --surface-2:#161d26;
+  --fg:#e9edf3; --muted:#9aa7b8; --line:#28313f; --faint:#1e2631;
+  --accent:#c3cde6;
+  --le:#6ea6f0; --le-bg:#16233b;
+  --la:#ff6e78; --la-bg:#39212a;
+  --good:#5ed29f; --bad:#ff6e78;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#11151c; --surface:#1a212b; --surface-2:#161d26;
+  --fg:#e9edf3; --muted:#9aa7b8; --line:#28313f; --faint:#1e2631;
+  --accent:#c3cde6;
+  --le:#6ea6f0; --le-bg:#16233b;
+  --la:#ff6e78; --la-bg:#39212a;
+  --good:#5ed29f; --bad:#ff6e78;
+  color-scheme:dark;
+}
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+*{box-sizing:border-box}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.tnum{font-variant-numeric:tabular-nums}
+
+#app{display:flex;flex-direction:column;height:100%;max-width:560px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));}
+
+header{display:flex;align-items:center;justify-content:space-between;padding-block:14px 10px;flex:0 0 auto}
+.brand{font-family:var(--font-display);font-weight:600;font-size:1.15rem;letter-spacing:-.01em;display:flex;gap:.3em}
+.brand .b1{color:var(--le)} .brand .b2{color:var(--la)}
+.stat{font-size:.72rem;color:var(--muted);text-align:right;line-height:1.3}
+.stat b{color:var(--fg);font-weight:600}
+.linklike{background:none;border:0;color:var(--muted);font-size:.72rem;text-decoration:underline;padding:2px 0}
+
+#home{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding-bottom:20px}
+.lede{font-family:var(--font-display);font-size:1.5rem;line-height:1.2;font-weight:500;text-wrap:balance;margin:4px 0 0}
+.lede small{display:block;font-family:var(--font-ui);font-size:.82rem;font-weight:400;color:var(--muted);margin-top:6px;letter-spacing:.01em}
+
+.seg{display:flex;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px 8px;font-size:.86rem;font-weight:600;color:var(--muted);white-space:normal;line-height:1.2}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.seg .arrow{font-weight:400;opacity:.6}
+
+.section-label{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.decks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.deck{display:flex;flex-direction:column;gap:3px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 14px 13px;transition:transform .08s ease,border-color .15s}
+.deck:active{transform:scale(.98)}
+.deck .nm{font-weight:600;font-size:.95rem}
+.deck .ct{font-size:.74rem;color:var(--muted)}
+.deck.wide{grid-column:1 / -1;flex-direction:row;align-items:center;justify-content:space-between}
+.deck.drill{border-color:transparent;background:linear-gradient(135deg,var(--le-bg),var(--la-bg))}
+.deck.drill .nm{color:var(--fg)}
+.grouphead{grid-column:1/-1;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:8px;padding-top:12px;border-top:1px solid var(--line)}
+
+#study{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.topbar{display:flex;align-items:center;gap:12px;padding-block:6px 10px;flex:0 0 auto}
+.back{border:1px solid var(--line);background:var(--surface);border-radius:10px;width:38px;height:38px;font-size:1.1rem;flex:0 0 auto;display:grid;place-items:center}
+.topmeta{flex:1 1 auto;min-width:0}
+.topmeta .nm{font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topmeta .sub{font-size:.72rem;color:var(--muted)}
+.score{font-size:.78rem;color:var(--muted);text-align:right;flex:0 0 auto}
+.score b{color:var(--good);font-weight:700}
+
+.bar{height:5px;background:var(--faint);border-radius:99px;overflow:hidden;flex:0 0 auto}
+.bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .25s ease}
+
+.stage{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:10px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:0;flex:1 1 auto;text-align:center;box-shadow:0 2px 10px rgba(20,30,50,.05)}
+.kicker{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.term{font-family:var(--font-display);font-weight:500;line-height:1.12;font-size:clamp(1.8rem,7.5vw,2.9rem);text-wrap:balance;letter-spacing:-.01em}
+.term .art{font-style:italic}
+.term .art.le{color:var(--le)} .term .art.la{color:var(--la)}
+.answer{font-size:clamp(1.15rem,5vw,1.5rem);font-weight:600}
+.example{font-size:.9rem;color:var(--muted);line-height:1.45;max-width:34ch;border-top:1px solid var(--line);padding-top:12px;font-family:var(--font-display);font-style:italic}
+.verdict{font-size:.82rem;font-weight:700;letter-spacing:.02em}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.numword{font-size:clamp(1.3rem,6.4vw,2.1rem);overflow-wrap:anywhere;max-width:100%;line-height:1.15}
+
+.controls{flex:0 0 auto;display:flex;flex-direction:column;gap:10px;padding-block:12px calc(14px + env(safe-area-inset-bottom,0px))}
+.btn{border:0;border-radius:14px;padding:16px;font-size:1rem;font-weight:700;width:100%;transition:transform .07s ease,filter .15s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);color:var(--surface)}
+:root[data-theme="dark"] .btn.primary,:root:not([data-theme="light"]) .btn.primary{color:#11151c}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.primary{color:#fff}}
+.btn.ghost{background:var(--surface);border:1px solid var(--line);color:var(--fg);font-weight:600}
+.row{display:flex;gap:10px}.row>*{flex:1}
+
+.arts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.art-btn{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:18px 6px 14px;font-weight:700;font-size:1.2rem;line-height:1;display:flex;flex-direction:column;gap:4px;align-items:center;transition:transform .07s ease,border-color .12s,background .12s}
+.art-btn small{font-size:.6rem;font-weight:600;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.art-btn:active{transform:scale(.97)}
+.art-btn[data-k="le"]{color:var(--le)} .art-btn[data-k="le"].fill{background:var(--le-bg);border-color:var(--le)}
+.art-btn[data-k="la"]{color:var(--la)} .art-btn[data-k="la"].fill{background:var(--la-bg);border-color:var(--la)}
+.art-btn.wrong{border-color:var(--bad);background:transparent;opacity:.55}
+.art-btn:disabled{cursor:default}
+
+.toggle{display:inline-flex;align-items:center;gap:10px;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:.84rem;font-weight:600;color:var(--fg);align-self:flex-start}
+.toggle .sw{width:34px;height:20px;border-radius:99px;background:var(--line);position:relative;transition:background .15s;flex:0 0 auto}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.toggle[aria-pressed="true"] .sw{background:var(--le)}
+.toggle[aria-pressed="true"] .sw::after{transform:translateX(14px)}
+.voicewrap{display:flex;flex-direction:column;gap:6px;align-self:flex-start;max-width:100%;margin-top:-8px}
+.voicelabel{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.voicesel{max-width:100%;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.82rem;font-weight:600;color:var(--fg)}
+.spk{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);display:inline-grid;place-items:center;transition:transform .07s ease,background .12s}
+.spk:active{transform:scale(.9)} .spk.speaking{color:var(--le);border-color:var(--le)}
+.cfg{width:100%;display:flex;flex-direction:column;gap:9px}
+.hint{font-size:.78rem;color:var(--muted);text-align:center;max-width:32ch;margin:0 auto}
+
+.done{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+.done .big{font-family:var(--font-display);font-size:2.6rem;font-weight:500;line-height:1}
+.done .pct{font-size:3.4rem;font-weight:800;color:var(--accent);line-height:1;font-family:var(--font-ui)}
+.done p{color:var(--muted);font-size:.9rem;margin:0}
+
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2.5px solid var(--le);outline-offset:2px;border-radius:6px}
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand"><span class="b1">le</span>&nbsp;<span style="color:var(--fg)">mot juste</span></div>
+    <div class="stat" id="homeStat"></div>
+  </header>
+
+  <main id="home">
+    <h1 class="lede">French C1 vocabulary
+      <small>C1 → C2 · le / la · tap to study</small>
+    </h1>
+    <div>
+      <div class="section-label" style="margin-bottom:8px">Direction</div>
+      <div class="seg" id="dirSeg" role="group" aria-label="Study direction">
+        <button data-dir="fr" aria-pressed="true">French <span class="arrow">→</span> English</button>
+        <button data-dir="en" aria-pressed="false">English <span class="arrow">→</span> French</button>
+      </div>
+    </div>
+    <button class="toggle" id="audioToggle" aria-pressed="true"><span class="sw"></span> Speak French aloud</button>
+    <div id="voiceWrap" class="voicewrap hidden">
+      <label for="voiceSel" class="voicelabel">Choose the French voice</label>
+      <select id="voiceSel" class="voicesel" aria-label="French voice"></select>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:8px">Decks</div>
+      <div class="decks" id="deckGrid"></div>
+    </div>
+    <button class="linklike" id="resetBtn" style="align-self:flex-start">Reset my progress</button>
+  </main>
+
+  <section id="study" class="hidden">
+    <div class="topbar">
+      <button class="back" id="backBtn" aria-label="Back to decks">←</button>
+      <div class="topmeta"><div class="nm" id="deckName"></div><div class="sub" id="deckSub"></div></div>
+      <div class="score" id="scoreBox"></div>
+    </div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="stage" id="stage"></div>
+    <div class="controls" id="controls"></div>
+  </section>
+</div>
+
+<script>
+const WORDS = [{"g":"l'enjeu","e":"the stake; what is at stake","a":"le","c":"noun","t":"","x":"L'enjeu de ce débat est considérable."},{"g":"le défi","e":"the challenge","a":"le","c":"noun","t":"","x":"Relever ce défi sera difficile."},{"g":"la démarche","e":"the approach; process; step","a":"la","c":"noun","t":"","x":"Sa démarche est très rigoureuse."},{"g":"l'essor","e":"the rise; boom","a":"le","c":"noun","t":"","x":"Le numérique a connu un essor fulgurant."},{"g":"le constat","e":"the observation; finding","a":"le","c":"noun","t":"","x":"Le constat est sans appel."},{"g":"l'ampleur","e":"the scale; magnitude","a":"la","c":"noun","t":"","x":"On mesure mal l'ampleur du problème."},{"g":"la lacune","e":"the gap; shortcoming","a":"la","c":"noun","t":"","x":"Ce rapport comporte des lacunes."},{"g":"l'écueil","e":"the pitfall","a":"le","c":"noun","t":"","x":"Le principal écueil est la précipitation."},{"g":"le bouleversement","e":"the upheaval","a":"le","c":"noun","t":"","x":"Ce fut un bouleversement total."},{"g":"le clivage","e":"the divide; split","a":"le","c":"noun","t":"","x":"Le clivage politique s'accentue."},{"g":"la nuance","e":"the nuance","a":"la","c":"noun","t":"","x":"Il faut saisir chaque nuance."},{"g":"le recul","e":"hindsight; stepping back","a":"le","c":"noun","t":"","x":"Avec le recul, c'était une erreur."},{"g":"la portée","e":"the scope; significance","a":"la","c":"noun","t":"","x":"On sous-estime la portée de cette décision."},{"g":"l'engouement","e":"the craze; enthusiasm","a":"le","c":"noun","t":"","x":"L'engouement pour l'IA est réel."},{"g":"la méfiance","e":"the distrust","a":"la","c":"noun","t":"","x":"Il regarde tout avec méfiance."},{"g":"l'emprise","e":"the hold; grip","a":"la","c":"noun","t":"","x":"Il veut échapper à son emprise."},{"g":"la rupture","e":"the break; rupture","a":"la","c":"noun","t":"","x":"C'est une rupture avec le passé."},{"g":"l'aléa","e":"the hazard; uncertainty","a":"le","c":"noun","t":"","x":"Les aléas du marché sont nombreux."},{"g":"la contrainte","e":"the constraint","a":"la","c":"noun","t":"","x":"Le budget est une vraie contrainte."},{"g":"le levier","e":"the lever; leverage","a":"le","c":"noun","t":"","x":"La formation est un levier puissant."},{"g":"la cible","e":"the target","a":"la","c":"noun","t":"","x":"Le public cible est bien défini."},{"g":"l'écart","e":"the gap; discrepancy","a":"le","c":"noun","t":"","x":"L'écart se creuse entre les deux."},{"g":"le seuil","e":"the threshold","a":"le","c":"noun","t":"","x":"On a franchi un seuil critique."},{"g":"l'envergure","e":"the scale; stature","a":"la","c":"noun","t":"","x":"C'est un projet d'envergure."},{"g":"la prouesse","e":"the feat","a":"la","c":"noun","t":"","x":"C'est une véritable prouesse technique."},{"g":"l'aboutissement","e":"the culmination; outcome","a":"le","c":"noun","t":"","x":"C'est l'aboutissement de dix ans de travail."},{"g":"s'avérer","e":"to prove; turn out","a":"","c":"verb","t":"","x":"La méthode s'est avérée efficace."},{"g":"découler","e":"to stem from","a":"","c":"verb","t":"","x":"Tout découle de cette décision."},{"g":"entraver","e":"to hinder","a":"","c":"verb","t":"","x":"La bureaucratie entrave le progrès."},{"g":"susciter","e":"to arouse; provoke","a":"","c":"verb","t":"","x":"Cette idée suscite le débat."},{"g":"préconiser","e":"to advocate; recommend","a":"","c":"verb","t":"","x":"Les experts préconisent la prudence."},{"g":"déceler","e":"to detect","a":"","c":"verb","t":"","x":"On a décelé une anomalie."},{"g":"pallier","e":"to make up for; remedy","a":"","c":"verb","t":"","x":"Il faut pallier ce manque."},{"g":"s'affranchir","e":"to free oneself","a":"","c":"verb","t":"","x":"Elle s'est affranchie des conventions."},{"g":"se heurter","e":"to come up against","a":"","c":"verb","t":"","x":"Le projet se heurte à des obstacles."},{"g":"étayer","e":"to support; substantiate","a":"","c":"verb","t":"","x":"Il faut étayer cette hypothèse."},{"g":"occulter","e":"to obscure; hide","a":"","c":"verb","t":"","x":"On ne peut pas occulter ce fait."},{"g":"enrayer","e":"to curb; halt","a":"","c":"verb","t":"","x":"Il faut enrayer la crise."},{"g":"cerner","e":"to grasp; pin down","a":"","c":"verb","t":"","x":"Il est difficile de cerner le problème."},{"g":"ébranler","e":"to shake; undermine","a":"","c":"verb","t":"","x":"Cette crise a ébranlé la confiance."},{"g":"esquisser","e":"to sketch; outline","a":"","c":"verb","t":"","x":"Il esquisse une solution."},{"g":"peaufiner","e":"to fine-tune","a":"","c":"verb","t":"","x":"Je peaufine les derniers détails."},{"g":"pertinent","e":"relevant","a":"","c":"word","t":"","x":"C'est une remarque très pertinente."},{"g":"probant","e":"conclusive; convincing","a":"","c":"word","t":"","x":"Les résultats sont probants."},{"g":"flagrant","e":"blatant; glaring","a":"","c":"word","t":"","x":"C'est une injustice flagrante."},{"g":"subtil","e":"subtle","a":"","c":"word","t":"","x":"La différence est subtile."},{"g":"redoutable","e":"formidable; fearsome","a":"","c":"word","t":"","x":"C'est un adversaire redoutable."},{"g":"incontournable","e":"unavoidable; essential","a":"","c":"word","t":"","x":"C'est une référence incontournable."},{"g":"éloquent","e":"eloquent; telling","a":"","c":"word","t":"","x":"Les chiffres sont éloquents."},{"g":"avéré","e":"proven; established","a":"","c":"word","t":"","x":"C'est un fait avéré."},{"g":"épineux","e":"thorny; tricky","a":"","c":"word","t":"","x":"C'est une question épineuse."},{"g":"fallacieux","e":"fallacious; deceptive","a":"","c":"word","t":"","x":"Son argument est fallacieux."},{"g":"saisissant","e":"striking","a":"","c":"word","t":"","x":"Le contraste est saisissant."},{"g":"tenace","e":"tenacious; persistent","a":"","c":"word","t":"","x":"Il est d'une volonté tenace."},{"g":"chevronné","e":"seasoned; experienced","a":"","c":"word","t":"","x":"C'est un négociateur chevronné."},{"g":"nuancé","e":"nuanced","a":"","c":"word","t":"","x":"Son avis est très nuancé."},{"g":"déconcertant","e":"disconcerting","a":"","c":"word","t":"","x":"Sa réaction est déconcertante."},{"g":"sciemment","e":"knowingly; deliberately","a":"","c":"word","t":"","x":"Il a sciemment menti."},{"g":"davantage","e":"more","a":"","c":"word","t":"","x":"Il faudrait davantage de temps."},{"g":"guère","e":"hardly","a":"","c":"word","t":"","x":"Ça n'a guère d'importance."},{"g":"dorénavant","e":"from now on","a":"","c":"word","t":"","x":"Dorénavant, soyez à l'heure."},{"g":"néanmoins","e":"nevertheless","a":"","c":"word","t":"connecteurs","x":"C'est cher ; néanmoins, j'achète."},{"g":"toutefois","e":"however","a":"","c":"word","t":"connecteurs","x":"Je comprends ; toutefois, je refuse."},{"g":"en revanche","e":"on the other hand","a":"","c":"word","t":"connecteurs","x":"Lui est calme ; en revanche, elle s'énerve."},{"g":"par conséquent","e":"consequently","a":"","c":"word","t":"connecteurs","x":"Il pleut, par conséquent on reste."},{"g":"ainsi","e":"thus; so","a":"","c":"word","t":"connecteurs","x":"Ainsi, tout s'explique."},{"g":"or","e":"now; yet (contrast)","a":"","c":"word","t":"connecteurs","x":"Il promettait de venir ; or, il n'est pas là."},{"g":"cependant","e":"however","a":"","c":"word","t":"connecteurs","x":"C'est risqué, cependant utile."},{"g":"en effet","e":"indeed","a":"","c":"word","t":"connecteurs","x":"Il a raison ; en effet, les faits le prouvent."},{"g":"certes","e":"admittedly","a":"","c":"word","t":"connecteurs","x":"Certes, c'est difficile, mais possible."},{"g":"d'ailleurs","e":"moreover; besides","a":"","c":"word","t":"connecteurs","x":"D'ailleurs, il l'a reconnu."},{"g":"par ailleurs","e":"furthermore","a":"","c":"word","t":"connecteurs","x":"Par ailleurs, le coût augmente."},{"g":"en outre","e":"in addition","a":"","c":"word","t":"connecteurs","x":"En outre, il manque de temps."},{"g":"dès lors","e":"therefore; from then on","a":"","c":"word","t":"connecteurs","x":"Dès lors, tout a changé."},{"g":"de surcroît","e":"moreover","a":"","c":"word","t":"connecteurs","x":"C'est long et, de surcroît, inutile."},{"g":"quoique","e":"although","a":"","c":"word","t":"connecteurs","x":"Quoique fatigué, il continue."},{"g":"bien que","e":"although","a":"","c":"word","t":"connecteurs","x":"Bien qu'il pleuve, on sort."},{"g":"afin que","e":"so that","a":"","c":"word","t":"connecteurs","x":"Je répète afin que tout soit clair."},{"g":"pourvu que","e":"provided that","a":"","c":"word","t":"connecteurs","x":"Ça ira, pourvu qu'il fasse beau."},{"g":"tandis que","e":"whereas; while","a":"","c":"word","t":"connecteurs","x":"Lui travaille, tandis qu'elle dort."},{"g":"en somme","e":"in short","a":"","c":"word","t":"connecteurs","x":"En somme, c'est un succès."},{"g":"faute de","e":"for lack of","a":"","c":"word","t":"connecteurs","x":"Faute de temps, on abandonne."},{"g":"compte tenu de","e":"given; considering","a":"","c":"word","t":"connecteurs","x":"Compte tenu des délais, c'est bien."},{"g":"à l'instar de","e":"like; following","a":"","c":"word","t":"connecteurs","x":"À l'instar de ses voisins, le pays réforme."},{"g":"voire","e":"even; indeed","a":"","c":"word","t":"connecteurs","x":"C'est difficile, voire impossible."},{"g":"notamment","e":"notably; in particular","a":"","c":"word","t":"connecteurs","x":"Plusieurs pays, notamment la Suisse."},{"g":"en l'occurrence","e":"in this case","a":"","c":"word","t":"connecteurs","x":"Lui, en l'occurrence, a tort."},{"g":"au fur et à mesure","e":"gradually; as one goes","a":"","c":"word","t":"connecteurs","x":"On corrige au fur et à mesure."},{"g":"quitte à","e":"even if it means","a":"","c":"word","t":"connecteurs","x":"Je finirai, quitte à veiller tard."},{"g":"de prime abord","e":"at first glance","a":"","c":"word","t":"connecteurs","x":"De prime abord, ça paraît simple."},{"g":"force est de constater","e":"one has to admit","a":"","c":"word","t":"connecteurs","x":"Force est de constater l'échec."},{"g":"tomber dans les pommes","e":"to faint","a":"","c":"idiom","t":"expressions","x":"Il a tant couru qu'il est tombé dans les pommes."},{"g":"avoir le cafard","e":"to feel down","a":"","c":"idiom","t":"expressions","x":"En novembre, j'ai souvent le cafard."},{"g":"poser un lapin","e":"to stand someone up","a":"","c":"idiom","t":"expressions","x":"Elle m'a posé un lapin hier soir."},{"g":"coûter les yeux de la tête","e":"to cost a fortune","a":"","c":"idiom","t":"expressions","x":"Cette montre coûte les yeux de la tête."},{"g":"mettre la main à la pâte","e":"to pitch in","a":"","c":"idiom","t":"expressions","x":"Tout le monde a mis la main à la pâte."},{"g":"avoir du pain sur la planche","e":"to have a lot to do","a":"","c":"idiom","t":"expressions","x":"On a du pain sur la planche cette semaine."},{"g":"tirer son épingle du jeu","e":"to come out on top","a":"","c":"idiom","t":"expressions","x":"Malgré la crise, il tire son épingle du jeu."},{"g":"faire la sourde oreille","e":"to turn a deaf ear","a":"","c":"idiom","t":"expressions","x":"Il fait la sourde oreille à mes conseils."},{"g":"mettre les points sur les i","e":"to spell it out","a":"","c":"idiom","t":"expressions","x":"Il a fallu mettre les points sur les i."},{"g":"jeter l'éponge","e":"to throw in the towel","a":"","c":"idiom","t":"expressions","x":"Après trois échecs, il a jeté l'éponge."},{"g":"être au bout du rouleau","e":"to be at the end of one's tether","a":"","c":"idiom","t":"expressions","x":"Après ce projet, je suis au bout du rouleau."},{"g":"ne pas y aller par quatre chemins","e":"to not beat about the bush","a":"","c":"idiom","t":"expressions","x":"Elle n'y va pas par quatre chemins."},{"g":"en faire tout un fromage","e":"to make a big fuss","a":"","c":"idiom","t":"expressions","x":"Ne va pas en faire tout un fromage !"},{"g":"avoir le coup de foudre","e":"to fall in love at first sight","a":"","c":"idiom","t":"expressions","x":"Ils ont eu le coup de foudre."},{"g":"broyer du noir","e":"to be down in the dumps","a":"","c":"idiom","t":"expressions","x":"Reste pas seul à broyer du noir."},{"g":"passer une nuit blanche","e":"to have a sleepless night","a":"","c":"idiom","t":"expressions","x":"J'ai passé une nuit blanche à travailler."},{"g":"donner sa langue au chat","e":"to give up guessing","a":"","c":"idiom","t":"expressions","x":"Je donne ma langue au chat."},{"g":"mettre de l'eau dans son vin","e":"to tone it down","a":"","c":"idiom","t":"expressions","x":"Il a fini par mettre de l'eau dans son vin."},{"g":"avoir d'autres chats à fouetter","e":"to have other fish to fry","a":"","c":"idiom","t":"expressions","x":"J'ai d'autres chats à fouetter."},{"g":"faire d'une pierre deux coups","e":"to kill two birds with one stone","a":"","c":"idiom","t":"expressions","x":"En venant ici, je fais d'une pierre deux coups."},{"g":"se mettre sur son trente et un","e":"to dress to the nines","a":"","c":"idiom","t":"expressions","x":"Pour le gala, elle s'est mise sur son trente et un."},{"g":"appeler un chat un chat","e":"to call a spade a spade","a":"","c":"idiom","t":"expressions","x":"J'aime appeler un chat un chat."},{"g":"revenir à ses moutons","e":"to get back to the subject","a":"","c":"idiom","t":"expressions","x":"Revenons à nos moutons."},{"g":"avoir un poil dans la main","e":"to be very lazy","a":"","c":"idiom","t":"expressions","x":"Ce stagiaire a un poil dans la main."},{"g":"prendre son mal en patience","e":"to grin and bear it","a":"","c":"idiom","t":"expressions","x":"Il faut prendre son mal en patience."},{"g":"le pouvoir","e":"the power","a":"le","c":"noun","t":"societe","x":"Le pouvoir corrompt parfois."},{"g":"l'État","e":"the state","a":"le","c":"noun","t":"societe","x":"L'État intervient dans l'économie."},{"g":"le citoyen","e":"the citizen","a":"le","c":"noun","t":"societe","x":"Chaque citoyen a des droits."},{"g":"la citoyenneté","e":"the citizenship","a":"la","c":"noun","t":"societe","x":"La citoyenneté implique des devoirs."},{"g":"le scrutin","e":"the ballot; vote","a":"le","c":"noun","t":"societe","x":"Le scrutin a lieu dimanche."},{"g":"le mandat","e":"the term of office; mandate","a":"le","c":"noun","t":"societe","x":"Son mandat s'achève bientôt."},{"g":"la laïcité","e":"secularism","a":"la","c":"noun","t":"societe","x":"La laïcité est un principe fondamental."},{"g":"l'inégalité","e":"the inequality","a":"la","c":"noun","t":"societe","x":"Les inégalités se creusent."},{"g":"la fracture sociale","e":"the social divide","a":"la","c":"noun","t":"societe","x":"La fracture sociale inquiète."},{"g":"la revendication","e":"the demand; claim","a":"la","c":"noun","t":"societe","x":"Les revendications sont légitimes."},{"g":"la grève","e":"the strike","a":"la","c":"noun","t":"societe","x":"La grève paralyse les transports."},{"g":"le syndicat","e":"the (trade) union","a":"le","c":"noun","t":"societe","x":"Le syndicat appelle à manifester."},{"g":"la polémique","e":"the controversy","a":"la","c":"noun","t":"societe","x":"Ses propos ont créé la polémique."},{"g":"le fléau","e":"the scourge","a":"le","c":"noun","t":"societe","x":"Le chômage est un fléau."},{"g":"la précarité","e":"precariousness; insecurity","a":"la","c":"noun","t":"societe","x":"La précarité touche les jeunes."},{"g":"l'exclusion","e":"the exclusion","a":"la","c":"noun","t":"societe","x":"L'exclusion sociale progresse."},{"g":"la cohésion","e":"the cohesion","a":"la","c":"noun","t":"societe","x":"La cohésion sociale est fragile."},{"g":"le ressortissant","e":"the national; citizen","a":"le","c":"noun","t":"societe","x":"C'est un ressortissant suisse."},{"g":"revendiquer","e":"to demand; claim","a":"","c":"verb","t":"societe","x":"Ils revendiquent une hausse."},{"g":"gouverner","e":"to govern","a":"","c":"verb","t":"societe","x":"Gouverner, c'est prévoir."},{"g":"légiférer","e":"to legislate","a":"","c":"verb","t":"societe","x":"Le parlement légifère sur le sujet."},{"g":"clivant","e":"divisive","a":"","c":"word","t":"societe","x":"C'est un sujet très clivant."},{"g":"marginalisé","e":"marginalised","a":"","c":"word","t":"societe","x":"Ces populations sont marginalisées."},{"g":"l'entreprise","e":"the company","a":"la","c":"noun","t":"economie","x":"L'entreprise embauche."},{"g":"le marché","e":"the market","a":"le","c":"noun","t":"economie","x":"Le marché est saturé."},{"g":"la croissance","e":"the growth","a":"la","c":"noun","t":"economie","x":"La croissance ralentit."},{"g":"la récession","e":"the recession","a":"la","c":"noun","t":"economie","x":"Le pays entre en récession."},{"g":"le chômage","e":"the unemployment","a":"le","c":"noun","t":"economie","x":"Le chômage baisse légèrement."},{"g":"l'embauche","e":"the hiring","a":"la","c":"noun","t":"economie","x":"L'embauche est gelée."},{"g":"le licenciement","e":"the layoff; dismissal","a":"le","c":"noun","t":"economie","x":"Le licenciement est contesté."},{"g":"la rentabilité","e":"the profitability","a":"la","c":"noun","t":"economie","x":"La rentabilité s'améliore."},{"g":"le chiffre d'affaires","e":"the turnover; revenue","a":"le","c":"noun","t":"economie","x":"Le chiffre d'affaires a doublé."},{"g":"l'investissement","e":"the investment","a":"le","c":"noun","t":"economie","x":"L'investissement porte ses fruits."},{"g":"la concurrence","e":"the competition","a":"la","c":"noun","t":"economie","x":"La concurrence est rude."},{"g":"le concurrent","e":"the competitor","a":"le","c":"noun","t":"economie","x":"Le concurrent baisse ses prix."},{"g":"la pénurie","e":"the shortage","a":"la","c":"noun","t":"economie","x":"Il y a une pénurie de main-d'œuvre."},{"g":"l'actionnaire","e":"the shareholder","a":"le","c":"noun","t":"economie","x":"L'actionnaire exige des résultats."},{"g":"la dette","e":"the debt","a":"la","c":"noun","t":"economie","x":"La dette publique augmente."},{"g":"la gestion","e":"the management","a":"la","c":"noun","t":"economie","x":"La gestion est rigoureuse."},{"g":"le salarié","e":"the employee","a":"le","c":"noun","t":"economie","x":"Le salarié réclame une prime."},{"g":"le télétravail","e":"the remote work","a":"le","c":"noun","t":"economie","x":"Le télétravail s'est généralisé."},{"g":"rentable","e":"profitable","a":"","c":"word","t":"economie","x":"Le projet n'est pas rentable."},{"g":"embaucher","e":"to hire","a":"","c":"verb","t":"economie","x":"On embauche deux personnes."},{"g":"licencier","e":"to lay off","a":"","c":"verb","t":"economie","x":"L'usine licencie cent salariés."},{"g":"investir","e":"to invest","a":"","c":"verb","t":"economie","x":"Ils investissent dans la recherche."},{"g":"rémunérer","e":"to pay; remunerate","a":"","c":"verb","t":"economie","x":"Le travail est bien rémunéré."},{"g":"le réchauffement climatique","e":"global warming","a":"le","c":"noun","t":"environnement","x":"Le réchauffement climatique s'accélère."},{"g":"le climat","e":"the climate","a":"le","c":"noun","t":"environnement","x":"Le climat se dérègle."},{"g":"la biodiversité","e":"the biodiversity","a":"la","c":"noun","t":"environnement","x":"La biodiversité s'effondre."},{"g":"l'empreinte carbone","e":"the carbon footprint","a":"la","c":"noun","t":"environnement","x":"Il réduit son empreinte carbone."},{"g":"l'énergie renouvelable","e":"the renewable energy","a":"la","c":"noun","t":"environnement","x":"L'énergie renouvelable progresse."},{"g":"la pollution","e":"the pollution","a":"la","c":"noun","t":"environnement","x":"La pollution de l'air est grave."},{"g":"le gaspillage","e":"the waste; squandering","a":"le","c":"noun","t":"environnement","x":"Le gaspillage alimentaire est énorme."},{"g":"le déchet","e":"the waste; rubbish","a":"le","c":"noun","t":"environnement","x":"On trie les déchets."},{"g":"le recyclage","e":"the recycling","a":"le","c":"noun","t":"environnement","x":"Le recyclage est obligatoire."},{"g":"la sécheresse","e":"the drought","a":"la","c":"noun","t":"environnement","x":"La sécheresse menace les récoltes."},{"g":"l'inondation","e":"the flood","a":"la","c":"noun","t":"environnement","x":"L'inondation a détruit le pont."},{"g":"la canicule","e":"the heatwave","a":"la","c":"noun","t":"environnement","x":"La canicule dure une semaine."},{"g":"le développement durable","e":"sustainable development","a":"le","c":"noun","t":"environnement","x":"Le développement durable est une priorité."},{"g":"la transition énergétique","e":"the energy transition","a":"la","c":"noun","t":"environnement","x":"La transition énergétique coûte cher."},{"g":"l'écosystème","e":"the ecosystem","a":"le","c":"noun","t":"environnement","x":"L'écosystème est fragile."},{"g":"l'espèce","e":"the species","a":"la","c":"noun","t":"environnement","x":"Cette espèce est menacée."},{"g":"l'hypothèse","e":"the hypothesis","a":"la","c":"noun","t":"environnement","x":"L'hypothèse reste à vérifier."},{"g":"la découverte","e":"the discovery","a":"la","c":"noun","t":"environnement","x":"La découverte est majeure."},{"g":"polluer","e":"to pollute","a":"","c":"verb","t":"environnement","x":"Ces usines polluent la rivière."},{"g":"préserver","e":"to preserve","a":"","c":"verb","t":"environnement","x":"Il faut préserver la nature."},{"g":"gaspiller","e":"to waste","a":"","c":"verb","t":"environnement","x":"On gaspille trop d'eau."},{"g":"durable","e":"sustainable; lasting","a":"","c":"word","t":"environnement","x":"C'est une solution durable."},{"g":"nuisible","e":"harmful","a":"","c":"word","t":"environnement","x":"Ce produit est nuisible à la santé."},{"g":"l'angoisse","e":"the anguish; anxiety","a":"la","c":"noun","t":"emotions","x":"L'angoisse le gagne avant chaque examen."},{"g":"le ressentiment","e":"the resentment","a":"le","c":"noun","t":"emotions","x":"Il éprouve du ressentiment."},{"g":"la bienveillance","e":"the kindness; benevolence","a":"la","c":"noun","t":"emotions","x":"Elle agit avec bienveillance."},{"g":"l'empathie","e":"the empathy","a":"la","c":"noun","t":"emotions","x":"Il manque d'empathie."},{"g":"la pudeur","e":"the modesty; reserve","a":"la","c":"noun","t":"emotions","x":"Il parle de lui avec pudeur."},{"g":"l'orgueil","e":"the pride","a":"le","c":"noun","t":"emotions","x":"Son orgueil l'empêche de s'excuser."},{"g":"la lassitude","e":"the weariness","a":"la","c":"noun","t":"emotions","x":"Une grande lassitude l'envahit."},{"g":"le dépit","e":"the spite; resentment","a":"le","c":"noun","t":"emotions","x":"Il a abandonné par dépit."},{"g":"la sérénité","e":"the serenity","a":"la","c":"noun","t":"emotions","x":"Elle affronte tout avec sérénité."},{"g":"l'agacement","e":"the irritation","a":"le","c":"noun","t":"emotions","x":"Il cache mal son agacement."},{"g":"la honte","e":"the shame","a":"la","c":"noun","t":"emotions","x":"Il rougit de honte."},{"g":"la fierté","e":"the pride","a":"la","c":"noun","t":"emotions","x":"Elle regarde son fils avec fierté."},{"g":"l'entêtement","e":"the stubbornness","a":"le","c":"noun","t":"emotions","x":"Son entêtement le perdra."},{"g":"la franchise","e":"the frankness","a":"la","c":"noun","t":"emotions","x":"J'apprécie ta franchise."},{"g":"bienveillant","e":"kind; caring","a":"","c":"word","t":"emotions","x":"Il est bienveillant avec tous."},{"g":"susceptible","e":"touchy; sensitive","a":"","c":"word","t":"emotions","x":"Ne sois pas si susceptible."},{"g":"têtu","e":"stubborn","a":"","c":"word","t":"emotions","x":"Il est têtu comme une mule."},{"g":"lâche","e":"cowardly","a":"","c":"word","t":"emotions","x":"C'est un geste lâche."},{"g":"audacieux","e":"bold; daring","a":"","c":"word","t":"emotions","x":"C'est un choix audacieux."},{"g":"lunatique","e":"moody","a":"","c":"word","t":"emotions","x":"Il est d'humeur lunatique."},{"g":"s'épanouir","e":"to flourish; blossom","a":"","c":"verb","t":"emotions","x":"Elle s'épanouit dans ce métier."},{"g":"se vexer","e":"to take offence","a":"","c":"verb","t":"emotions","x":"Il se vexe pour un rien."},{"g":"agacer","e":"to irritate","a":"","c":"verb","t":"emotions","x":"Ce bruit m'agace."},{"g":"la mansuétude","e":"leniency; mercy","a":"la","c":"noun","t":"soutenu","x":"Le juge a fait preuve de mansuétude."},{"g":"la probité","e":"integrity; probity","a":"la","c":"noun","t":"soutenu","x":"Sa probité est irréprochable."},{"g":"la sagacité","e":"shrewdness; sagacity","a":"la","c":"noun","t":"soutenu","x":"Il analyse avec sagacité."},{"g":"l'outrecuidance","e":"arrogance; presumption","a":"la","c":"noun","t":"soutenu","x":"Son outrecuidance a choqué l'assemblée."},{"g":"les atermoiements","e":"procrastination; dithering","a":"le","c":"noun","t":"soutenu","x":"Ses atermoiements ont tout retardé."},{"g":"la velléité","e":"half-hearted intention","a":"la","c":"noun","t":"soutenu","x":"Il n'a que des velléités de changement."},{"g":"le courroux","e":"wrath","a":"le","c":"noun","t":"soutenu","x":"Il redoute le courroux de son supérieur."},{"g":"l'opprobre","e":"opprobrium; disgrace","a":"le","c":"noun","t":"soutenu","x":"Il a été couvert d'opprobre."},{"g":"le dédain","e":"disdain","a":"le","c":"noun","t":"soutenu","x":"Elle le toise avec dédain."},{"g":"la quiétude","e":"quietude; peace","a":"la","c":"noun","t":"soutenu","x":"Il recherche la quiétude de la campagne."},{"g":"l'allégresse","e":"elation; joy","a":"la","c":"noun","t":"soutenu","x":"La foule était en pleine allégresse."},{"g":"la prodigalité","e":"lavishness","a":"la","c":"noun","t":"soutenu","x":"Sa prodigalité l'a ruiné."},{"g":"pusillanime","e":"faint-hearted; timorous","a":"","c":"word","t":"soutenu","x":"Un chef pusillanime n'inspire personne."},{"g":"obséquieux","e":"obsequious","a":"","c":"word","t":"soutenu","x":"Son ton obséquieux agace."},{"g":"prolixe","e":"long-winded; verbose","a":"","c":"word","t":"soutenu","x":"L'orateur est trop prolixe."},{"g":"laconique","e":"laconic; terse","a":"","c":"word","t":"soutenu","x":"Sa réponse fut laconique."},{"g":"sibyllin","e":"cryptic; sibylline","a":"","c":"word","t":"soutenu","x":"Il a tenu des propos sibyllins."},{"g":"péremptoire","e":"peremptory","a":"","c":"word","t":"soutenu","x":"Il parle d'un ton péremptoire."},{"g":"ineffable","e":"ineffable","a":"","c":"word","t":"soutenu","x":"Une joie ineffable l'envahit."},{"g":"faramineux","e":"staggering; astronomical","a":"","c":"word","t":"soutenu","x":"Le prix est faramineux."},{"g":"abscons","e":"abstruse; obscure","a":"","c":"word","t":"soutenu","x":"Ce texte est abscons."},{"g":"idoine","e":"suitable; apt","a":"","c":"word","t":"soutenu","x":"C'est la solution idoine."},{"g":"grandiloquent","e":"grandiloquent","a":"","c":"word","t":"soutenu","x":"Son discours est grandiloquent."},{"g":"rocambolesque","e":"far-fetched; fantastical","a":"","c":"word","t":"soutenu","x":"C'est une histoire rocambolesque."},{"g":"nonobstant","e":"notwithstanding","a":"","c":"word","t":"soutenu","x":"Nonobstant les risques, il persiste."},{"g":"derechef","e":"once again","a":"","c":"word","t":"soutenu","x":"Il s'y attela derechef."},{"g":"naguère","e":"not long ago","a":"","c":"word","t":"soutenu","x":"Naguère, ce quartier était paisible."},{"g":"jadis","e":"formerly; long ago","a":"","c":"word","t":"soutenu","x":"Jadis, on vivait autrement."},{"g":"partant","e":"therefore; hence","a":"","c":"word","t":"soutenu","x":"Il est absent, partant il ne votera pas."},{"g":"sitôt","e":"as soon as","a":"","c":"word","t":"soutenu","x":"Sitôt dit, sitôt fait."},{"g":"fustiger","e":"to castigate; lambast","a":"","c":"verb","t":"soutenu","x":"Il fustige l'hypocrisie ambiante."},{"g":"vilipender","e":"to vilify","a":"","c":"verb","t":"soutenu","x":"On l'a vilipendé dans la presse."},{"g":"atermoyer","e":"to procrastinate; stall","a":"","c":"verb","t":"soutenu","x":"Cesse d'atermoyer et décide."},{"g":"s'enorgueillir","e":"to pride oneself","a":"","c":"verb","t":"soutenu","x":"Il s'enorgueillit de ses succès."},{"g":"pérorer","e":"to hold forth; pontificate","a":"","c":"verb","t":"soutenu","x":"Il pérore sans écouter personne."},{"g":"louvoyer","e":"to tack; manoeuvre evasively","a":"","c":"verb","t":"soutenu","x":"Le ministre louvoie sur la question."},{"g":"maugréer","e":"to grumble","a":"","c":"verb","t":"soutenu","x":"Il obéit en maugréant."},{"g":"se gausser","e":"to scoff; mock","a":"","c":"verb","t":"soutenu","x":"Ils se gaussent de ses efforts."},{"g":"actuellement","e":"currently; right now (not: actually)","a":"","c":"word","t":"fauxamis","x":"Il est actuellement en réunion."},{"g":"actuel","e":"current; present (not: actual)","a":"","c":"word","t":"fauxamis","x":"La situation actuelle est tendue."},{"g":"éventuellement","e":"possibly; if need be (not: eventually)","a":"","c":"word","t":"fauxamis","x":"Je viendrai éventuellement."},{"g":"éventuel","e":"possible; potential (not: eventual)","a":"","c":"word","t":"fauxamis","x":"Un éventuel retard est à prévoir."},{"g":"sensible","e":"sensitive (not: sensible)","a":"","c":"word","t":"fauxamis","x":"C'est un sujet sensible."},{"g":"la lecture","e":"the reading (not: a lecture)","a":"la","c":"noun","t":"fauxamis","x":"La lecture est son passe-temps favori."},{"g":"le car","e":"the coach; bus (not: a car)","a":"le","c":"noun","t":"fauxamis","x":"On prend le car pour l'excursion."},{"g":"la monnaie","e":"change; currency (not: money)","a":"la","c":"noun","t":"fauxamis","x":"Avez-vous de la monnaie ?"},{"g":"le bail","e":"the lease (not: bail)","a":"le","c":"noun","t":"fauxamis","x":"Le bail expire en juin."},{"g":"la librairie","e":"the bookshop (not: a library)","a":"la","c":"noun","t":"fauxamis","x":"J'achète ce roman à la librairie."},{"g":"la figure","e":"the face (not: only a figure)","a":"la","c":"noun","t":"fauxamis","x":"Il a reçu un coup en pleine figure."},{"g":"la prune","e":"the plum (not: prune)","a":"la","c":"noun","t":"fauxamis","x":"Cette prune est bien juteuse."},{"g":"le coin","e":"the corner (not: coin)","a":"le","c":"noun","t":"fauxamis","x":"Le café au coin de la rue."},{"g":"la cave","e":"the cellar (not: a cave)","a":"la","c":"noun","t":"fauxamis","x":"Le vin est à la cave."},{"g":"gentil","e":"kind; nice (not: gentle)","a":"","c":"word","t":"fauxamis","x":"Il est très gentil avec tout le monde."},{"g":"assister","e":"to attend (not: to assist)","a":"","c":"verb","t":"fauxamis","x":"J'assiste à la conférence."},{"g":"attendre","e":"to wait for (not: to attend)","a":"","c":"verb","t":"fauxamis","x":"J'attends le bus."},{"g":"demander","e":"to ask (not: to demand)","a":"","c":"verb","t":"fauxamis","x":"Il demande l'heure."},{"g":"décevoir","e":"to disappoint (not: to deceive)","a":"","c":"verb","t":"fauxamis","x":"Ce film m'a déçu."},{"g":"blesser","e":"to injure; hurt (not: to bless)","a":"","c":"verb","t":"fauxamis","x":"Il s'est blessé au genou."},{"g":"rester","e":"to stay (not: to rest)","a":"","c":"verb","t":"fauxamis","x":"Je reste à la maison."},{"g":"user","e":"to wear out (not: to use)","a":"","c":"verb","t":"fauxamis","x":"Ces chaussures sont usées."},{"g":"apporter","e":"to bring (a thing) — for objects","a":"","c":"verb","t":"nuances","x":"Apporte le dossier, s'il te plaît."},{"g":"amener","e":"to bring (a person) — for people","a":"","c":"verb","t":"nuances","x":"Amène ton frère à la fête."},{"g":"emporter","e":"to take away (an object)","a":"","c":"verb","t":"nuances","x":"J'emporte un sandwich."},{"g":"emmener","e":"to take (a person) along","a":"","c":"verb","t":"nuances","x":"Il emmène les enfants à l'école."},{"g":"savoir","e":"to know (a fact; how to)","a":"","c":"verb","t":"nuances","x":"Je sais nager."},{"g":"connaître","e":"to know (a person or place)","a":"","c":"verb","t":"nuances","x":"Je connais bien Paris."},{"g":"entendre","e":"to hear (perceive sound)","a":"","c":"verb","t":"nuances","x":"J'entends un bruit."},{"g":"écouter","e":"to listen (to)","a":"","c":"verb","t":"nuances","x":"J'écoute de la musique."},{"g":"se rappeler","e":"to remember (+ direct object)","a":"","c":"verb","t":"nuances","x":"Je me rappelle son nom."},{"g":"se souvenir","e":"to remember (+ de)","a":"","c":"verb","t":"nuances","x":"Je me souviens de lui."},{"g":"rencontrer","e":"to meet (by chance; first time)","a":"","c":"verb","t":"nuances","x":"J'ai rencontré un ami en ville."},{"g":"retrouver","e":"to meet up with (again, arranged)","a":"","c":"verb","t":"nuances","x":"On se retrouve à midi."},{"g":"habiter","e":"to live (reside somewhere)","a":"","c":"verb","t":"nuances","x":"J'habite à Genève."},{"g":"vivre","e":"to live (be alive; experience)","a":"","c":"verb","t":"nuances","x":"Il a vécu des moments difficiles."},{"g":"l'an","e":"year (a count; a point in time)","a":"le","c":"noun","t":"nuances","x":"Il a trente ans."},{"g":"l'année","e":"year (a duration experienced)","a":"la","c":"noun","t":"nuances","x":"Ce fut une bonne année."},{"g":"le jour","e":"day (a unit; a point)","a":"le","c":"noun","t":"nuances","x":"Quel jour sommes-nous ?"},{"g":"la journée","e":"day (the whole duration)","a":"la","c":"noun","t":"nuances","x":"J'ai travaillé toute la journée."},{"g":"le matin","e":"morning (a point in time)","a":"le","c":"noun","t":"nuances","x":"Je pars demain matin."},{"g":"la matinée","e":"morning (the whole duration)","a":"la","c":"noun","t":"nuances","x":"J'ai passé la matinée à lire."},{"g":"le soir","e":"evening (a point in time)","a":"le","c":"noun","t":"nuances","x":"On se voit ce soir."},{"g":"la soirée","e":"evening (duration; a party)","a":"la","c":"noun","t":"nuances","x":"La soirée fut agréable."}];
+const PHRASES = [];
+
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+function accepted(c){ return c.a==="le"?["le"]:c.a==="la"?["la"]:[]; }
+function isNoun(c){ return c.c==="noun" && (c.a==="le"||c.a==="la"); }
+function bare(c){ const g=c.g;
+  if(g.startsWith("le ")) return g.slice(3);
+  if(g.startsWith("la ")) return g.slice(3);
+  if(g.startsWith("les ")) return g.slice(4);
+  if(g.startsWith("l'")) return g.slice(2);
+  return g; }
+function frTerm(c){        // colour the leading article (le/la/l'/les)
+  const g=c.g; let art=null, rest=g;
+  if(g.startsWith("le ")){art="le";rest=g.slice(3);}
+  else if(g.startsWith("la ")){art="la";rest=g.slice(3);}
+  else if(g.startsWith("les ")){art="les";rest=g.slice(4);}
+  else if(g.startsWith("l'")){art="l'";rest=g.slice(2);}
+  if(!art) return g;
+  const col = c.a==="la" ? "la" : "le";
+  return `<span class="art ${col}">${art}</span>${art==="l'"?"":" "}${rest}`;
+}
+
+/* ---------- speech (French voice, on device) ---------- */
+const canSpeak = typeof speechSynthesis!=="undefined" && typeof SpeechSynthesisUtterance!=="undefined";
+let AUDIO=true, VOICE_URI=null;
+try{ AUDIO = (localStorage.getItem("c1_audio")||"on")!=="off"; }catch(e){}
+try{ VOICE_URI = localStorage.getItem("c1_voice")||null; }catch(e){}
+function frVoices(){ return canSpeak ? speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang)) : []; }
+function rankVoice(v){ const n=(v.name+" "+v.voiceURI).toLowerCase(); let s=0;
+  if(/google/.test(n)) s+=100;                                   // Google voices sound best
+  if(/(enhanced|premium|neural|siri|natural)/.test(n)) s+=50;     // Apple enhanced / neural
+  if(v.localService===false) s+=20;                              // network voices usually better
+  if(/(compact|eloquence|basic)/.test(n)) s-=60;                 // the robotic ones
+  if(/fr-fr/i.test(v.lang)) s+=5;
+  return s; }
+function chosenVoice(){ const vs=frVoices(); if(!vs.length) return null;
+  if(VOICE_URI){ const m=vs.find(v=>v.voiceURI===VOICE_URI); if(m) return m; }
+  return vs.slice().sort((a,b)=>rankVoice(b)-rankVoice(a))[0]; }
+function speechText(c){ return (c.g||"").replace(/[()]/g,"").replace(/\s+/g," ").trim(); }
+function speak(text){ if(!canSpeak||!text) return;
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text);
+    const v=chosenVoice(); u.lang = v ? v.lang : "fr-FR"; if(v) u.voice=v; u.rate=0.95; u.pitch=1;
+    const btn=document.querySelector(".spk");
+    if(btn){ u.onstart=()=>btn.classList.add("speaking"); u.onend=u.onerror=()=>btn.classList.remove("speaking"); }
+    speechSynthesis.speak(u);
+  }catch(e){} }
+function autoSpeak(text){ if(AUDIO) speak(text); }
+const SPK='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>';
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function spkBtn(say){ return canSpeak?`<button class="spk" data-say="${esc(say)}" aria-label="Hear it in French">${SPK}</button>`:""; }
+
+/* ---------- French numbers (counting) ---------- */
+const U=["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf","dix","onze","douze","treize","quatorze","quinze","seize"];
+function u19(n){ return n<17 ? U[n] : "dix-"+U[n-10]; }
+const T={20:"vingt",30:"trente",40:"quarante",50:"cinquante",60:"soixante"};
+function fr99(n){
+  if(n<20) return u19(n);
+  if(n<70){ const t=Math.floor(n/10)*10,u=n%10;
+    if(u===0) return T[t]; if(u===1) return T[t]+" et un"; return T[t]+"-"+U[u]; }
+  if(n<80){ const r=n-60; return r===11 ? "soixante et onze" : "soixante-"+u19(r); }
+  const r=n-80; return r===0 ? "quatre-vingts" : "quatre-vingt-"+u19(r);
+}
+function frNum(n){
+  if(n===1000) return "mille";
+  if(n<100) return fr99(n);
+  const h=Math.floor(n/100), r=n%100;
+  if(r===0) return h===1 ? "cent" : U[h]+" cents";
+  return (h===1?"cent":U[h]+" cent")+" "+fr99(r);
+}
+function numberDeck(max,count){
+  const used=new Set(), out=[];
+  while(out.length<count){ const n=Math.floor(Math.random()*(max+1));
+    if(used.has(n)) continue; used.add(n);
+    out.push({g:frNum(n), e:String(n), a:"", c:"number", t:"", x:""}); }
+  return out;
+}
+
+/* days / months / seasons for a focused deck */
+const CAL=new Set(["le lundi","le mardi","le mercredi","le jeudi","le vendredi","le samedi","le dimanche","le week-end","janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre","le printemps","l'été","l'automne","l'hiver"]);
+
+/* ---------- persistence ---------- */
+let STATS={}, DIR="fr", NUM_RANGE=100, NUM_MODE="n2f";
+try{ STATS=JSON.parse(localStorage.getItem("c1_stats")||"{}"); }catch(e){ STATS={}; }
+try{ DIR=localStorage.getItem("c1_dir")||"fr"; }catch(e){}
+try{ NUM_RANGE=+(localStorage.getItem("c1_numrange")||100)||100; }catch(e){}
+try{ NUM_MODE=localStorage.getItem("c1_nummode")||"n2f"; }catch(e){}
+function save(){ try{ localStorage.setItem("c1_stats",JSON.stringify(STATS)); }catch(e){} }
+function saveDir(){ try{ localStorage.setItem("c1_dir",DIR); }catch(e){} }
+function record(c,ok){ const s=STATS[c.g]||(STATS[c.g]={s:0,k:0}); s.s++; if(ok)s.k++; save(); }
+function seenCount(){ return Object.keys(STATS).length; }
+function trickyCards(){
+  return WORDS.filter(c=>{const s=STATS[c.g]; return s&&s.s>=2&&s.k/s.s<0.6;})
+              .sort((a,b)=>{const A=STATS[a.g],B=STATS[b.g];return A.k/A.s-B.k/B.s;}).slice(0,24);
+}
+
+/* ---------- decks ---------- */
+const nouns=()=>WORDS.filter(c=>c.c==="noun");
+const DECKS=[
+ {id:"noun", nm:"Nouns", sub:"with le / la", get:()=>WORDS.filter(c=>c.c==="noun")},
+ {id:"verb", nm:"Verbs", sub:"", get:()=>WORDS.filter(c=>c.c==="verb")},
+ {id:"word", nm:"Other words", sub:"adjectives & more", get:()=>WORDS.filter(c=>c.c==="word")},
+ {id:"all", nm:"Everything", sub:"", wide:true, get:()=>WORDS.concat(PHRASES)},
+ {id:"quick", nm:"Quick 20", sub:"random mix", get:()=>shuffle(WORDS.concat(PHRASES)).slice(0,20)},
+ {id:"tricky", nm:"Tricky words", sub:"your weak spots", get:trickyCards},
+ {id:"drill", nm:"Gender drill", sub:"le · la", drill:true, wide:true, get:nouns},
+ {id:"t_conn", nm:"Connecteurs", sub:"linking words", group:"theme", get:()=>WORDS.filter(c=>c.t==="connecteurs")},
+ {id:"t_expr", nm:"Expressions", sub:"idioms", group:"theme", get:()=>WORDS.filter(c=>c.t==="expressions")},
+ {id:"t_soc", nm:"Société & politique", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="societe")},
+ {id:"t_eco", nm:"Économie & travail", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="economie")},
+ {id:"t_env", nm:"Environnement & sciences", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="environnement")},
+ {id:"t_emo", nm:"Émotions & caractère", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="emotions")},
+ {id:"t_sout", nm:"Registre soutenu", sub:"literary & formal", group:"theme", tier:"c2", get:()=>WORDS.filter(c=>c.t==="soutenu")},
+ {id:"t_faux", nm:"Faux-amis", sub:"false friends", group:"theme", tier:"c2", get:()=>WORDS.filter(c=>c.t==="fauxamis")},
+ {id:"t_nuan", nm:"Nuances & synonymes", sub:"fine distinctions", group:"theme", tier:"c2", get:()=>WORDS.filter(c=>c.t==="nuances")},
+];
+
+function renderHome(){
+  $("#homeStat").innerHTML = seenCount() ? `<b>${seenCount()}</b> words practised` : `tap a deck to start`;
+  $("#dirSeg").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.dir===DIR));
+  const grid=$("#deckGrid"); grid.innerHTML="";
+  const mk=d=>{
+    const n=d.get().length;
+    if(d.id==="tricky" && n<4) return;
+    const b=document.createElement("button");
+    b.className="deck"+(d.wide?" wide":"")+((d.drill||d.special==="numbers")?" drill":"");
+    b.innerHTML=`<span class="nm">${d.nm}</span>`+
+      `<span class="ct">${d.special ? d.sub : (d.sub?d.sub+" · ":"")+n+" card"+(n===1?"":"s")}</span>`;
+    b.onclick=()=>start(d);
+    grid.appendChild(b);
+  };
+  DECKS.filter(d=>d.group!=="theme").forEach(mk);
+  const gh=document.createElement("div"); gh.className="grouphead";
+  gh.textContent="Thèmes C1"; grid.appendChild(gh);
+  DECKS.filter(d=>d.group==="theme" && d.tier!=="c2").forEach(mk);
+  const gh2=document.createElement("div"); gh2.className="grouphead";
+  gh2.textContent="Vers le C2"; grid.appendChild(gh2);
+  DECKS.filter(d=>d.group==="theme" && d.tier==="c2").forEach(mk);
+}
+$("#dirSeg").onclick=e=>{const b=e.target.closest("button");if(!b)return;DIR=b.dataset.dir;saveDir();renderHome();};
+$("#resetBtn").onclick=()=>{ STATS={}; save(); renderHome(); };
+const audioBtn=$("#audioToggle");
+if(!canSpeak) audioBtn.classList.add("hidden");
+audioBtn.setAttribute("aria-pressed", AUDIO);
+audioBtn.onclick=()=>{ AUDIO=!AUDIO; try{localStorage.setItem("c1_audio",AUDIO?"on":"off");}catch(e){}
+  audioBtn.setAttribute("aria-pressed",AUDIO); if(AUDIO) speak("Bonjour"); };
+$("#stage").addEventListener("click",e=>{ const b=e.target.closest(".spk"); if(b){ e.stopPropagation(); speak(b.dataset.say); } });
+
+/* voice picker — lets Ben choose the best French voice his phone has */
+function populateVoices(){
+  if(!canSpeak) return;
+  const wrap=$("#voiceWrap"), sel=$("#voiceSel");
+  const vs=frVoices().slice().sort((a,b)=>rankVoice(b)-rankVoice(a));
+  if(vs.length<=1){ wrap.classList.add("hidden"); return; }
+  const cur=chosenVoice();
+  sel.innerHTML=vs.map(v=>`<option value="${esc(v.voiceURI)}"${(cur&&v.voiceURI===cur.voiceURI)?" selected":""}>${esc(v.name)}</option>`).join("");
+  wrap.classList.remove("hidden");
+}
+$("#voiceSel").onchange=e=>{ VOICE_URI=e.target.value; try{localStorage.setItem("c1_voice",VOICE_URI);}catch(err){} speak("Bonjour, je parle français."); };
+if(canSpeak){ populateVoices(); try{ speechSynthesis.addEventListener("voiceschanged",populateVoices); }catch(e){} }
+
+/* ---------- session ---------- */
+let S=null;
+const QUIT="QUIT";
+function start(deck){
+  if(deck.special==="numbers") return openNumbers();
+  const cards=shuffle(deck.get()); const mode=deck.drill?"drill":DIR;
+  if(!cards.length) return;
+  S={deck, mode, q:cards, n0:cards.length, ptr:0, answered:0, correct:0, phase:null, artOk:true};
+  $("#home").classList.add("hidden"); $("#study").classList.remove("hidden");
+  $("#deckName").textContent=deck.drill?"Gender drill":deck.nm;
+  $("#deckSub").textContent = deck.drill ? "le · la" : (DIR==="fr"?"French → English":"English → French");
+  renderCard();
+}
+function backHome(){ S=null; $("#study").classList.add("hidden"); $("#home").classList.remove("hidden"); renderHome(); }
+$("#backBtn").onclick=backHome;
+
+function numHint(){ return NUM_MODE==="f2n" ? "Hear the French number, recall the digits." : "See the number, say it in French."; }
+function openNumbers(){
+  S={deck:{special:"numbers"}, mode:"cfg"};
+  $("#home").classList.add("hidden"); $("#study").classList.remove("hidden");
+  $("#deckName").textContent="Numbers"; $("#deckSub").textContent="choose your practice";
+  $("#scoreBox").textContent=""; $("#barFill").style.width="0%";
+  const rOpts=[[20,"0–20"],[100,"0–100"],[1000,"0–1000"]];
+  const mOpts=[["n2f","Number → French"],["f2n","French → number"]];
+  $("#stage").innerHTML=`<div class="card" style="justify-content:center;gap:20px">
+     <div class="cfg"><div class="section-label">Range</div>
+       <div class="seg" id="numRange">${rOpts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${NUM_RANGE==v}">${l}</button>`).join("")}</div></div>
+     <div class="cfg"><div class="section-label">Mode</div>
+       <div class="seg" id="numMode">${mOpts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${NUM_MODE==v}">${l}</button>`).join("")}</div></div>
+     <div class="hint" id="numHint">${numHint()}</div></div>`;
+  $("#controls").innerHTML=`<button class="btn primary" id="numStart">Start</button>`;
+  const rng=$("#numRange"), md=$("#numMode");
+  rng.onclick=e=>{const b=e.target.closest("button");if(!b)return;NUM_RANGE=+b.dataset.v;try{localStorage.setItem("c1_numrange",NUM_RANGE);}catch(err){}
+    rng.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",+x.dataset.v===NUM_RANGE));};
+  md.onclick=e=>{const b=e.target.closest("button");if(!b)return;NUM_MODE=b.dataset.v;try{localStorage.setItem("c1_nummode",NUM_MODE);}catch(err){}
+    md.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===NUM_MODE));
+    $("#numHint").textContent=numHint();};
+  $("#numStart").onclick=startNumbers;
+}
+function startNumbers(){
+  const cards=numberDeck(NUM_RANGE,20);
+  S={deck:{special:"numbers",nm:"Numbers"}, mode:(NUM_MODE==="f2n"?"numr":"num"), q:cards, n0:cards.length, ptr:0, answered:0, correct:0, phase:null, artOk:true};
+  $("#deckSub").textContent=`0–${NUM_RANGE} · ${NUM_MODE==="f2n"?"French → number":"number → French"}`;
+  renderCard();
+}
+
+function updateTop(){
+  const total=S.q.length, done=S.ptr, left=total-done;
+  $("#barFill").style.width=(100*done/total)+"%";
+  if(S.mode==="drill") $("#scoreBox").innerHTML = S.answered ? `<b>${S.correct}</b>/${S.answered} · ${left} left` : `${total} cards`;
+  else $("#scoreBox").textContent = S.answered ? `${left} left` : `${total} cards`;
+}
+
+function artButtons(){
+  return `<div class="arts">
+   <button class="art-btn" data-k="le">le<small>masc.</small></button>
+   <button class="art-btn" data-k="la">la<small>fem.</small></button></div>`;
+}
+function wireArticles(){ $("#controls").querySelectorAll(".art-btn").forEach(b=>b.onclick=()=>chooseArticle(b.dataset.k)); }
+
+function renderCard(){
+  if(S.ptr>=S.q.length) return finish();
+  updateTop();
+  const c=S.q[S.ptr]; S.card=c; S.artOk=true;
+  const stage=$("#stage"), ctl=$("#controls");
+  const nounMode = (S.mode==="drill") || (S.mode==="en" && isNoun(c));
+
+  if(S.mode==="drill"){
+    S.phase="article";
+    stage.innerHTML=`<div class="card"><div class="kicker">le or la?</div>
+       <div class="term">${bare(c)}</div>${spkBtn(bare(c))}
+       <div class="example" style="border:0;padding:0;font-style:normal;color:var(--muted)">${c.e}</div></div>`;
+    ctl.innerHTML=artButtons(); wireArticles(); autoSpeak(bare(c));
+  } else if(S.mode==="num"){
+    S.phase="reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">say this number in French</div>
+       <div class="term tnum" style="font-family:var(--font-ui);font-weight:800;font-size:clamp(3rem,17vw,5rem)">${c.e}</div></div>`;
+    ctl.innerHTML=`<button class="btn primary" id="flip">Show answer</button>`; $("#flip").onclick=()=>revealNum(c);
+  } else if(S.mode==="numr"){
+    S.phase="reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">which number?</div>
+       <div class="term numword" style="font-family:var(--font-display)">${c.g}</div>${spkBtn(c.g)}</div>`;
+    ctl.innerHTML=`<button class="btn primary" id="flip">Show number</button>`; $("#flip").onclick=()=>revealNumR(c); autoSpeak(c.g);
+  } else if(S.mode==="en"){
+    S.phase = nounMode ? "article" : "reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">say it in French</div>
+       <div class="term" style="font-family:var(--font-ui);font-weight:700">${c.e}</div></div>`;
+    if(nounMode){ ctl.innerHTML=artButtons(); wireArticles(); }
+    else { ctl.innerHTML=`<button class="btn primary" id="flip">Show answer</button>`; $("#flip").onclick=()=>revealEN(c,false); }
+  } else {
+    S.phase="reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">what does it mean?</div>
+       <div class="term">${frTerm(c)}</div>${spkBtn(speechText(c))}</div>`;
+    ctl.innerHTML=`<button class="btn primary" id="flip">Show answer</button>`; $("#flip").onclick=()=>revealFR(c); autoSpeak(speechText(c));
+  }
+}
+function chooseArticle(k){
+  const c=S.card, ok=accepted(c).includes(k); S.artOk=ok;
+  $("#controls").querySelectorAll(".art-btn").forEach(b=>{ b.disabled=true;
+    if(accepted(c).includes(b.dataset.k)) b.classList.add("fill");
+    if(b.dataset.k===k && !ok){ b.classList.remove("fill"); b.classList.add("wrong"); } });
+  if(S.mode==="drill"){
+    record(c,ok); S.answered++; if(ok)S.correct++; if(!ok)S.q.push(c);
+    const card=$("#stage").querySelector(".card");
+    card.insertAdjacentHTML("beforeend", `<div class="verdict ${ok?'ok':'no'}">${(ok?'✓ ':'✗ ')+c.g}</div>`);
+    const sb=$("#stage").querySelector(".spk"); if(sb) sb.dataset.say=speechText(c);
+    $("#controls").innerHTML=`<button class="btn primary" id="nxt">Next</button>`; $("#nxt").onclick=next;
+    autoSpeak(speechText(c));
+  } else { revealEN(c,true); }
+}
+function revealEN(c,wasNoun){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card">
+     <div class="kicker">${wasNoun?(S.artOk?'<span style="color:var(--good)">gender ✓</span>':'<span style="color:var(--bad)">gender ✗</span>'):'in French'}</div>
+     <div class="term">${frTerm(c)}</div>${spkBtn(speechText(c))}
+     <div class="answer" style="color:var(--muted);font-weight:500">${c.e}</div>
+     ${c.x?`<div class="example">${c.x}</div>`:""}</div>`;
+  markButtons(); autoSpeak(speechText(c));
+}
+function revealFR(c){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card"><div class="kicker">meaning</div>
+     <div class="term" style="font-size:clamp(1.4rem,6vw,2.1rem)">${frTerm(c)}</div>${spkBtn(speechText(c))}
+     <div class="answer">${c.e}</div>${c.x?`<div class="example">${c.x}</div>`:""}</div>`;
+  markButtons();
+}
+function revealNum(c){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card"><div class="kicker tnum" style="font-size:1.4rem;font-weight:800;color:var(--accent)">${c.e}</div>
+     <div class="term numword" style="font-family:var(--font-display)">${c.g}</div>${spkBtn(c.g)}</div>`;
+  markButtons(); autoSpeak(c.g);
+}
+function revealNumR(c){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card"><div class="kicker">${c.g}</div>
+     <div class="term tnum" style="font-family:var(--font-ui);font-weight:800;font-size:clamp(3rem,17vw,5rem)">${c.e}</div>${spkBtn(c.g)}</div>`;
+  markButtons();
+}
+function markButtons(){
+  $("#controls").innerHTML=`<div class="row"><button class="btn ghost" id="again">Again</button><button class="btn primary" id="got">Got it</button></div>`;
+  $("#got").onclick=()=>mark(true); $("#again").onclick=()=>mark(false);
+}
+function mark(gotIt){
+  const c=S.card; const ok=gotIt&&S.artOk;
+  if(S.mode!=="num" && S.mode!=="numr") record(c,ok);
+  S.answered++; if(ok)S.correct++; if(!ok)S.q.push(c); next();
+}
+function next(){ S.ptr++; renderCard(); }
+
+function finish(){
+  updateTop();
+  if(S.mode==="drill"){
+    const pct=S.answered?Math.round(100*S.correct/S.answered):0;
+    const msg = pct>=90?"Excellent !" : pct>=70?"Bien joué !" : pct>=50?"Continue comme ça !" : "C'est en forgeant qu'on devient forgeron.";
+    $("#stage").innerHTML=`<div class="done"><div class="pct tnum">${pct}%</div><div class="big">${msg}</div><p>${S.correct} of ${S.answered} correct</p></div>`;
+  } else {
+    const msg = (S.correct===S.answered) ? "Excellent !" : "Bien joué !";
+    $("#stage").innerHTML=`<div class="done"><div class="big" style="font-size:3rem">${msg}</div><p>${S.n0} card${S.n0===1?"":"s"} reviewed</p></div>`;
+  }
+  $("#controls").innerHTML=`<div class="row"><button class="btn ghost" id="home2">Decks</button><button class="btn primary" id="redo">Study again</button></div>`;
+  $("#home2").onclick=backHome;
+  $("#redo").onclick=()=> S.deck.special==="numbers"?startNumbers():start(S.deck);
+}
+
+document.addEventListener("keydown",e=>{
+  if(!S) return; const k=e.key.toLowerCase();
+  if(k==="escape") return backHome();
+  if(S.phase==="article"){ const map={"1":"le","2":"la"}; if(map[k]) chooseArticle(map[k]); }
+  else if(S.phase==="reveal" && (k===" "||k==="enter")){ e.preventDefault(); $("#flip")?.click(); }
+  else if(S.phase==="mark"){ if(k==="y"||k==="enter"){e.preventDefault();mark(true);} if(k==="n")mark(false); }
+  else if(S.q && $("#nxt") && (k===" "||k==="enter")){ e.preventDefault(); $("#nxt").click(); }
+});
+
+renderHome();
+</script>
+</body>
+</html>

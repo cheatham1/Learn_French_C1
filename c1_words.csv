@@ -1,0 +1,291 @@
+french,english,article,category,topic,example
+l'enjeu,the stake; what is at stake,le,noun,,L'enjeu de ce débat est considérable.
+le défi,the challenge,le,noun,,Relever ce défi sera difficile.
+la démarche,the approach; process; step,la,noun,,Sa démarche est très rigoureuse.
+l'essor,the rise; boom,le,noun,,Le numérique a connu un essor fulgurant.
+le constat,the observation; finding,le,noun,,Le constat est sans appel.
+l'ampleur,the scale; magnitude,la,noun,,On mesure mal l'ampleur du problème.
+la lacune,the gap; shortcoming,la,noun,,Ce rapport comporte des lacunes.
+l'écueil,the pitfall,le,noun,,Le principal écueil est la précipitation.
+le bouleversement,the upheaval,le,noun,,Ce fut un bouleversement total.
+le clivage,the divide; split,le,noun,,Le clivage politique s'accentue.
+la nuance,the nuance,la,noun,,Il faut saisir chaque nuance.
+le recul,hindsight; stepping back,le,noun,,"Avec le recul, c'était une erreur."
+la portée,the scope; significance,la,noun,,On sous-estime la portée de cette décision.
+l'engouement,the craze; enthusiasm,le,noun,,L'engouement pour l'IA est réel.
+la méfiance,the distrust,la,noun,,Il regarde tout avec méfiance.
+l'emprise,the hold; grip,la,noun,,Il veut échapper à son emprise.
+la rupture,the break; rupture,la,noun,,C'est une rupture avec le passé.
+l'aléa,the hazard; uncertainty,le,noun,,Les aléas du marché sont nombreux.
+la contrainte,the constraint,la,noun,,Le budget est une vraie contrainte.
+le levier,the lever; leverage,le,noun,,La formation est un levier puissant.
+la cible,the target,la,noun,,Le public cible est bien défini.
+l'écart,the gap; discrepancy,le,noun,,L'écart se creuse entre les deux.
+le seuil,the threshold,le,noun,,On a franchi un seuil critique.
+l'envergure,the scale; stature,la,noun,,C'est un projet d'envergure.
+la prouesse,the feat,la,noun,,C'est une véritable prouesse technique.
+l'aboutissement,the culmination; outcome,le,noun,,C'est l'aboutissement de dix ans de travail.
+s'avérer,to prove; turn out,,verb,,La méthode s'est avérée efficace.
+découler,to stem from,,verb,,Tout découle de cette décision.
+entraver,to hinder,,verb,,La bureaucratie entrave le progrès.
+susciter,to arouse; provoke,,verb,,Cette idée suscite le débat.
+préconiser,to advocate; recommend,,verb,,Les experts préconisent la prudence.
+déceler,to detect,,verb,,On a décelé une anomalie.
+pallier,to make up for; remedy,,verb,,Il faut pallier ce manque.
+s'affranchir,to free oneself,,verb,,Elle s'est affranchie des conventions.
+se heurter,to come up against,,verb,,Le projet se heurte à des obstacles.
+étayer,to support; substantiate,,verb,,Il faut étayer cette hypothèse.
+occulter,to obscure; hide,,verb,,On ne peut pas occulter ce fait.
+enrayer,to curb; halt,,verb,,Il faut enrayer la crise.
+cerner,to grasp; pin down,,verb,,Il est difficile de cerner le problème.
+ébranler,to shake; undermine,,verb,,Cette crise a ébranlé la confiance.
+esquisser,to sketch; outline,,verb,,Il esquisse une solution.
+peaufiner,to fine-tune,,verb,,Je peaufine les derniers détails.
+pertinent,relevant,,word,,C'est une remarque très pertinente.
+probant,conclusive; convincing,,word,,Les résultats sont probants.
+flagrant,blatant; glaring,,word,,C'est une injustice flagrante.
+subtil,subtle,,word,,La différence est subtile.
+redoutable,formidable; fearsome,,word,,C'est un adversaire redoutable.
+incontournable,unavoidable; essential,,word,,C'est une référence incontournable.
+éloquent,eloquent; telling,,word,,Les chiffres sont éloquents.
+avéré,proven; established,,word,,C'est un fait avéré.
+épineux,thorny; tricky,,word,,C'est une question épineuse.
+fallacieux,fallacious; deceptive,,word,,Son argument est fallacieux.
+saisissant,striking,,word,,Le contraste est saisissant.
+tenace,tenacious; persistent,,word,,Il est d'une volonté tenace.
+chevronné,seasoned; experienced,,word,,C'est un négociateur chevronné.
+nuancé,nuanced,,word,,Son avis est très nuancé.
+déconcertant,disconcerting,,word,,Sa réaction est déconcertante.
+sciemment,knowingly; deliberately,,word,,Il a sciemment menti.
+davantage,more,,word,,Il faudrait davantage de temps.
+guère,hardly,,word,,Ça n'a guère d'importance.
+dorénavant,from now on,,word,,"Dorénavant, soyez à l'heure."
+néanmoins,nevertheless,,word,connecteurs,"C'est cher ; néanmoins, j'achète."
+toutefois,however,,word,connecteurs,"Je comprends ; toutefois, je refuse."
+en revanche,on the other hand,,word,connecteurs,"Lui est calme ; en revanche, elle s'énerve."
+par conséquent,consequently,,word,connecteurs,"Il pleut, par conséquent on reste."
+ainsi,thus; so,,word,connecteurs,"Ainsi, tout s'explique."
+or,now; yet (contrast),,word,connecteurs,"Il promettait de venir ; or, il n'est pas là."
+cependant,however,,word,connecteurs,"C'est risqué, cependant utile."
+en effet,indeed,,word,connecteurs,"Il a raison ; en effet, les faits le prouvent."
+certes,admittedly,,word,connecteurs,"Certes, c'est difficile, mais possible."
+d'ailleurs,moreover; besides,,word,connecteurs,"D'ailleurs, il l'a reconnu."
+par ailleurs,furthermore,,word,connecteurs,"Par ailleurs, le coût augmente."
+en outre,in addition,,word,connecteurs,"En outre, il manque de temps."
+dès lors,therefore; from then on,,word,connecteurs,"Dès lors, tout a changé."
+de surcroît,moreover,,word,connecteurs,"C'est long et, de surcroît, inutile."
+quoique,although,,word,connecteurs,"Quoique fatigué, il continue."
+bien que,although,,word,connecteurs,"Bien qu'il pleuve, on sort."
+afin que,so that,,word,connecteurs,Je répète afin que tout soit clair.
+pourvu que,provided that,,word,connecteurs,"Ça ira, pourvu qu'il fasse beau."
+tandis que,whereas; while,,word,connecteurs,"Lui travaille, tandis qu'elle dort."
+en somme,in short,,word,connecteurs,"En somme, c'est un succès."
+faute de,for lack of,,word,connecteurs,"Faute de temps, on abandonne."
+compte tenu de,given; considering,,word,connecteurs,"Compte tenu des délais, c'est bien."
+à l'instar de,like; following,,word,connecteurs,"À l'instar de ses voisins, le pays réforme."
+voire,even; indeed,,word,connecteurs,"C'est difficile, voire impossible."
+notamment,notably; in particular,,word,connecteurs,"Plusieurs pays, notamment la Suisse."
+en l'occurrence,in this case,,word,connecteurs,"Lui, en l'occurrence, a tort."
+au fur et à mesure,gradually; as one goes,,word,connecteurs,On corrige au fur et à mesure.
+quitte à,even if it means,,word,connecteurs,"Je finirai, quitte à veiller tard."
+de prime abord,at first glance,,word,connecteurs,"De prime abord, ça paraît simple."
+force est de constater,one has to admit,,word,connecteurs,Force est de constater l'échec.
+tomber dans les pommes,to faint,,idiom,expressions,Il a tant couru qu'il est tombé dans les pommes.
+avoir le cafard,to feel down,,idiom,expressions,"En novembre, j'ai souvent le cafard."
+poser un lapin,to stand someone up,,idiom,expressions,Elle m'a posé un lapin hier soir.
+coûter les yeux de la tête,to cost a fortune,,idiom,expressions,Cette montre coûte les yeux de la tête.
+mettre la main à la pâte,to pitch in,,idiom,expressions,Tout le monde a mis la main à la pâte.
+avoir du pain sur la planche,to have a lot to do,,idiom,expressions,On a du pain sur la planche cette semaine.
+tirer son épingle du jeu,to come out on top,,idiom,expressions,"Malgré la crise, il tire son épingle du jeu."
+faire la sourde oreille,to turn a deaf ear,,idiom,expressions,Il fait la sourde oreille à mes conseils.
+mettre les points sur les i,to spell it out,,idiom,expressions,Il a fallu mettre les points sur les i.
+jeter l'éponge,to throw in the towel,,idiom,expressions,"Après trois échecs, il a jeté l'éponge."
+être au bout du rouleau,to be at the end of one's tether,,idiom,expressions,"Après ce projet, je suis au bout du rouleau."
+ne pas y aller par quatre chemins,to not beat about the bush,,idiom,expressions,Elle n'y va pas par quatre chemins.
+en faire tout un fromage,to make a big fuss,,idiom,expressions,Ne va pas en faire tout un fromage !
+avoir le coup de foudre,to fall in love at first sight,,idiom,expressions,Ils ont eu le coup de foudre.
+broyer du noir,to be down in the dumps,,idiom,expressions,Reste pas seul à broyer du noir.
+passer une nuit blanche,to have a sleepless night,,idiom,expressions,J'ai passé une nuit blanche à travailler.
+donner sa langue au chat,to give up guessing,,idiom,expressions,Je donne ma langue au chat.
+mettre de l'eau dans son vin,to tone it down,,idiom,expressions,Il a fini par mettre de l'eau dans son vin.
+avoir d'autres chats à fouetter,to have other fish to fry,,idiom,expressions,J'ai d'autres chats à fouetter.
+faire d'une pierre deux coups,to kill two birds with one stone,,idiom,expressions,"En venant ici, je fais d'une pierre deux coups."
+se mettre sur son trente et un,to dress to the nines,,idiom,expressions,"Pour le gala, elle s'est mise sur son trente et un."
+appeler un chat un chat,to call a spade a spade,,idiom,expressions,J'aime appeler un chat un chat.
+revenir à ses moutons,to get back to the subject,,idiom,expressions,Revenons à nos moutons.
+avoir un poil dans la main,to be very lazy,,idiom,expressions,Ce stagiaire a un poil dans la main.
+prendre son mal en patience,to grin and bear it,,idiom,expressions,Il faut prendre son mal en patience.
+le pouvoir,the power,le,noun,societe,Le pouvoir corrompt parfois.
+l'État,the state,le,noun,societe,L'État intervient dans l'économie.
+le citoyen,the citizen,le,noun,societe,Chaque citoyen a des droits.
+la citoyenneté,the citizenship,la,noun,societe,La citoyenneté implique des devoirs.
+le scrutin,the ballot; vote,le,noun,societe,Le scrutin a lieu dimanche.
+le mandat,the term of office; mandate,le,noun,societe,Son mandat s'achève bientôt.
+la laïcité,secularism,la,noun,societe,La laïcité est un principe fondamental.
+l'inégalité,the inequality,la,noun,societe,Les inégalités se creusent.
+la fracture sociale,the social divide,la,noun,societe,La fracture sociale inquiète.
+la revendication,the demand; claim,la,noun,societe,Les revendications sont légitimes.
+la grève,the strike,la,noun,societe,La grève paralyse les transports.
+le syndicat,the (trade) union,le,noun,societe,Le syndicat appelle à manifester.
+la polémique,the controversy,la,noun,societe,Ses propos ont créé la polémique.
+le fléau,the scourge,le,noun,societe,Le chômage est un fléau.
+la précarité,precariousness; insecurity,la,noun,societe,La précarité touche les jeunes.
+l'exclusion,the exclusion,la,noun,societe,L'exclusion sociale progresse.
+la cohésion,the cohesion,la,noun,societe,La cohésion sociale est fragile.
+le ressortissant,the national; citizen,le,noun,societe,C'est un ressortissant suisse.
+revendiquer,to demand; claim,,verb,societe,Ils revendiquent une hausse.
+gouverner,to govern,,verb,societe,"Gouverner, c'est prévoir."
+légiférer,to legislate,,verb,societe,Le parlement légifère sur le sujet.
+clivant,divisive,,word,societe,C'est un sujet très clivant.
+marginalisé,marginalised,,word,societe,Ces populations sont marginalisées.
+l'entreprise,the company,la,noun,economie,L'entreprise embauche.
+le marché,the market,le,noun,economie,Le marché est saturé.
+la croissance,the growth,la,noun,economie,La croissance ralentit.
+la récession,the recession,la,noun,economie,Le pays entre en récession.
+le chômage,the unemployment,le,noun,economie,Le chômage baisse légèrement.
+l'embauche,the hiring,la,noun,economie,L'embauche est gelée.
+le licenciement,the layoff; dismissal,le,noun,economie,Le licenciement est contesté.
+la rentabilité,the profitability,la,noun,economie,La rentabilité s'améliore.
+le chiffre d'affaires,the turnover; revenue,le,noun,economie,Le chiffre d'affaires a doublé.
+l'investissement,the investment,le,noun,economie,L'investissement porte ses fruits.
+la concurrence,the competition,la,noun,economie,La concurrence est rude.
+le concurrent,the competitor,le,noun,economie,Le concurrent baisse ses prix.
+la pénurie,the shortage,la,noun,economie,Il y a une pénurie de main-d'œuvre.
+l'actionnaire,the shareholder,le,noun,economie,L'actionnaire exige des résultats.
+la dette,the debt,la,noun,economie,La dette publique augmente.
+la gestion,the management,la,noun,economie,La gestion est rigoureuse.
+le salarié,the employee,le,noun,economie,Le salarié réclame une prime.
+le télétravail,the remote work,le,noun,economie,Le télétravail s'est généralisé.
+rentable,profitable,,word,economie,Le projet n'est pas rentable.
+embaucher,to hire,,verb,economie,On embauche deux personnes.
+licencier,to lay off,,verb,economie,L'usine licencie cent salariés.
+investir,to invest,,verb,economie,Ils investissent dans la recherche.
+rémunérer,to pay; remunerate,,verb,economie,Le travail est bien rémunéré.
+le réchauffement climatique,global warming,le,noun,environnement,Le réchauffement climatique s'accélère.
+le climat,the climate,le,noun,environnement,Le climat se dérègle.
+la biodiversité,the biodiversity,la,noun,environnement,La biodiversité s'effondre.
+l'empreinte carbone,the carbon footprint,la,noun,environnement,Il réduit son empreinte carbone.
+l'énergie renouvelable,the renewable energy,la,noun,environnement,L'énergie renouvelable progresse.
+la pollution,the pollution,la,noun,environnement,La pollution de l'air est grave.
+le gaspillage,the waste; squandering,le,noun,environnement,Le gaspillage alimentaire est énorme.
+le déchet,the waste; rubbish,le,noun,environnement,On trie les déchets.
+le recyclage,the recycling,le,noun,environnement,Le recyclage est obligatoire.
+la sécheresse,the drought,la,noun,environnement,La sécheresse menace les récoltes.
+l'inondation,the flood,la,noun,environnement,L'inondation a détruit le pont.
+la canicule,the heatwave,la,noun,environnement,La canicule dure une semaine.
+le développement durable,sustainable development,le,noun,environnement,Le développement durable est une priorité.
+la transition énergétique,the energy transition,la,noun,environnement,La transition énergétique coûte cher.
+l'écosystème,the ecosystem,le,noun,environnement,L'écosystème est fragile.
+l'espèce,the species,la,noun,environnement,Cette espèce est menacée.
+l'hypothèse,the hypothesis,la,noun,environnement,L'hypothèse reste à vérifier.
+la découverte,the discovery,la,noun,environnement,La découverte est majeure.
+polluer,to pollute,,verb,environnement,Ces usines polluent la rivière.
+préserver,to preserve,,verb,environnement,Il faut préserver la nature.
+gaspiller,to waste,,verb,environnement,On gaspille trop d'eau.
+durable,sustainable; lasting,,word,environnement,C'est une solution durable.
+nuisible,harmful,,word,environnement,Ce produit est nuisible à la santé.
+l'angoisse,the anguish; anxiety,la,noun,emotions,L'angoisse le gagne avant chaque examen.
+le ressentiment,the resentment,le,noun,emotions,Il éprouve du ressentiment.
+la bienveillance,the kindness; benevolence,la,noun,emotions,Elle agit avec bienveillance.
+l'empathie,the empathy,la,noun,emotions,Il manque d'empathie.
+la pudeur,the modesty; reserve,la,noun,emotions,Il parle de lui avec pudeur.
+l'orgueil,the pride,le,noun,emotions,Son orgueil l'empêche de s'excuser.
+la lassitude,the weariness,la,noun,emotions,Une grande lassitude l'envahit.
+le dépit,the spite; resentment,le,noun,emotions,Il a abandonné par dépit.
+la sérénité,the serenity,la,noun,emotions,Elle affronte tout avec sérénité.
+l'agacement,the irritation,le,noun,emotions,Il cache mal son agacement.
+la honte,the shame,la,noun,emotions,Il rougit de honte.
+la fierté,the pride,la,noun,emotions,Elle regarde son fils avec fierté.
+l'entêtement,the stubbornness,le,noun,emotions,Son entêtement le perdra.
+la franchise,the frankness,la,noun,emotions,J'apprécie ta franchise.
+bienveillant,kind; caring,,word,emotions,Il est bienveillant avec tous.
+susceptible,touchy; sensitive,,word,emotions,Ne sois pas si susceptible.
+têtu,stubborn,,word,emotions,Il est têtu comme une mule.
+lâche,cowardly,,word,emotions,C'est un geste lâche.
+audacieux,bold; daring,,word,emotions,C'est un choix audacieux.
+lunatique,moody,,word,emotions,Il est d'humeur lunatique.
+s'épanouir,to flourish; blossom,,verb,emotions,Elle s'épanouit dans ce métier.
+se vexer,to take offence,,verb,emotions,Il se vexe pour un rien.
+agacer,to irritate,,verb,emotions,Ce bruit m'agace.
+la mansuétude,leniency; mercy,la,noun,soutenu,Le juge a fait preuve de mansuétude.
+la probité,integrity; probity,la,noun,soutenu,Sa probité est irréprochable.
+la sagacité,shrewdness; sagacity,la,noun,soutenu,Il analyse avec sagacité.
+l'outrecuidance,arrogance; presumption,la,noun,soutenu,Son outrecuidance a choqué l'assemblée.
+les atermoiements,procrastination; dithering,le,noun,soutenu,Ses atermoiements ont tout retardé.
+la velléité,half-hearted intention,la,noun,soutenu,Il n'a que des velléités de changement.
+le courroux,wrath,le,noun,soutenu,Il redoute le courroux de son supérieur.
+l'opprobre,opprobrium; disgrace,le,noun,soutenu,Il a été couvert d'opprobre.
+le dédain,disdain,le,noun,soutenu,Elle le toise avec dédain.
+la quiétude,quietude; peace,la,noun,soutenu,Il recherche la quiétude de la campagne.
+l'allégresse,elation; joy,la,noun,soutenu,La foule était en pleine allégresse.
+la prodigalité,lavishness,la,noun,soutenu,Sa prodigalité l'a ruiné.
+pusillanime,faint-hearted; timorous,,word,soutenu,Un chef pusillanime n'inspire personne.
+obséquieux,obsequious,,word,soutenu,Son ton obséquieux agace.
+prolixe,long-winded; verbose,,word,soutenu,L'orateur est trop prolixe.
+laconique,laconic; terse,,word,soutenu,Sa réponse fut laconique.
+sibyllin,cryptic; sibylline,,word,soutenu,Il a tenu des propos sibyllins.
+péremptoire,peremptory,,word,soutenu,Il parle d'un ton péremptoire.
+ineffable,ineffable,,word,soutenu,Une joie ineffable l'envahit.
+faramineux,staggering; astronomical,,word,soutenu,Le prix est faramineux.
+abscons,abstruse; obscure,,word,soutenu,Ce texte est abscons.
+idoine,suitable; apt,,word,soutenu,C'est la solution idoine.
+grandiloquent,grandiloquent,,word,soutenu,Son discours est grandiloquent.
+rocambolesque,far-fetched; fantastical,,word,soutenu,C'est une histoire rocambolesque.
+nonobstant,notwithstanding,,word,soutenu,"Nonobstant les risques, il persiste."
+derechef,once again,,word,soutenu,Il s'y attela derechef.
+naguère,not long ago,,word,soutenu,"Naguère, ce quartier était paisible."
+jadis,formerly; long ago,,word,soutenu,"Jadis, on vivait autrement."
+partant,therefore; hence,,word,soutenu,"Il est absent, partant il ne votera pas."
+sitôt,as soon as,,word,soutenu,"Sitôt dit, sitôt fait."
+fustiger,to castigate; lambast,,verb,soutenu,Il fustige l'hypocrisie ambiante.
+vilipender,to vilify,,verb,soutenu,On l'a vilipendé dans la presse.
+atermoyer,to procrastinate; stall,,verb,soutenu,Cesse d'atermoyer et décide.
+s'enorgueillir,to pride oneself,,verb,soutenu,Il s'enorgueillit de ses succès.
+pérorer,to hold forth; pontificate,,verb,soutenu,Il pérore sans écouter personne.
+louvoyer,to tack; manoeuvre evasively,,verb,soutenu,Le ministre louvoie sur la question.
+maugréer,to grumble,,verb,soutenu,Il obéit en maugréant.
+se gausser,to scoff; mock,,verb,soutenu,Ils se gaussent de ses efforts.
+actuellement,currently; right now (not: actually),,word,fauxamis,Il est actuellement en réunion.
+actuel,current; present (not: actual),,word,fauxamis,La situation actuelle est tendue.
+éventuellement,possibly; if need be (not: eventually),,word,fauxamis,Je viendrai éventuellement.
+éventuel,possible; potential (not: eventual),,word,fauxamis,Un éventuel retard est à prévoir.
+sensible,sensitive (not: sensible),,word,fauxamis,C'est un sujet sensible.
+la lecture,the reading (not: a lecture),la,noun,fauxamis,La lecture est son passe-temps favori.
+le car,the coach; bus (not: a car),le,noun,fauxamis,On prend le car pour l'excursion.
+la monnaie,change; currency (not: money),la,noun,fauxamis,Avez-vous de la monnaie ?
+le bail,the lease (not: bail),le,noun,fauxamis,Le bail expire en juin.
+la librairie,the bookshop (not: a library),la,noun,fauxamis,J'achète ce roman à la librairie.
+la figure,the face (not: only a figure),la,noun,fauxamis,Il a reçu un coup en pleine figure.
+la prune,the plum (not: prune),la,noun,fauxamis,Cette prune est bien juteuse.
+le coin,the corner (not: coin),le,noun,fauxamis,Le café au coin de la rue.
+la cave,the cellar (not: a cave),la,noun,fauxamis,Le vin est à la cave.
+gentil,kind; nice (not: gentle),,word,fauxamis,Il est très gentil avec tout le monde.
+assister,to attend (not: to assist),,verb,fauxamis,J'assiste à la conférence.
+attendre,to wait for (not: to attend),,verb,fauxamis,J'attends le bus.
+demander,to ask (not: to demand),,verb,fauxamis,Il demande l'heure.
+décevoir,to disappoint (not: to deceive),,verb,fauxamis,Ce film m'a déçu.
+blesser,to injure; hurt (not: to bless),,verb,fauxamis,Il s'est blessé au genou.
+rester,to stay (not: to rest),,verb,fauxamis,Je reste à la maison.
+user,to wear out (not: to use),,verb,fauxamis,Ces chaussures sont usées.
+apporter,to bring (a thing) — for objects,,verb,nuances,"Apporte le dossier, s'il te plaît."
+amener,to bring (a person) — for people,,verb,nuances,Amène ton frère à la fête.
+emporter,to take away (an object),,verb,nuances,J'emporte un sandwich.
+emmener,to take (a person) along,,verb,nuances,Il emmène les enfants à l'école.
+savoir,to know (a fact; how to),,verb,nuances,Je sais nager.
+connaître,to know (a person or place),,verb,nuances,Je connais bien Paris.
+entendre,to hear (perceive sound),,verb,nuances,J'entends un bruit.
+écouter,to listen (to),,verb,nuances,J'écoute de la musique.
+se rappeler,to remember (+ direct object),,verb,nuances,Je me rappelle son nom.
+se souvenir,to remember (+ de),,verb,nuances,Je me souviens de lui.
+rencontrer,to meet (by chance; first time),,verb,nuances,J'ai rencontré un ami en ville.
+retrouver,"to meet up with (again, arranged)",,verb,nuances,On se retrouve à midi.
+habiter,to live (reside somewhere),,verb,nuances,J'habite à Genève.
+vivre,to live (be alive; experience),,verb,nuances,Il a vécu des moments difficiles.
+l'an,year (a count; a point in time),le,noun,nuances,Il a trente ans.
+l'année,year (a duration experienced),la,noun,nuances,Ce fut une bonne année.
+le jour,day (a unit; a point),le,noun,nuances,Quel jour sommes-nous ?
+la journée,day (the whole duration),la,noun,nuances,J'ai travaillé toute la journée.
+le matin,morning (a point in time),le,noun,nuances,Je pars demain matin.
+la matinée,morning (the whole duration),la,noun,nuances,J'ai passé la matinée à lire.
+le soir,evening (a point in time),le,noun,nuances,On se voit ce soir.
+la soirée,evening (duration; a party),la,noun,nuances,La soirée fut agréable.
